@@ -1,7 +1,7 @@
 using Field;
 using UnityEngine;
 
-namespace Player
+namespace Player.Movement
 {
     public class PlayerForwardMovement : MonoBehaviour
     {
@@ -32,7 +32,7 @@ namespace Player
 
         private void MoveStraight()
         {
-            transform.position += movementSpeed * transform.forward * Time.deltaTime;
+            transform.position += movementSpeed * Time.deltaTime * transform.forward;
         }
 
         private void MoveOnTurn()

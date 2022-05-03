@@ -5,8 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Field
-  - RightTurn
-  - LeftTurn
+  - PlayerCube
+  - Obstacle
   layers:
   - Default
   - TransparentFX
@@ -14,7 +14,7 @@ TagManager:
   - Field
   - Water
   - UI
-  - 
+  - Obstacle
   - Player
   - 
   - 
