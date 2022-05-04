@@ -40,16 +40,21 @@ namespace Player.Cubes
 
         private void PickCube(Component cube)
         {
-            // Destroy the cube in the level
-            Destroy(cube.gameObject);
+            // Deactivate and destroy the cube in the level
+            // Deactivation is needed to prevent repetitive pickups of the cube
+            var cubeGameObject = cube.gameObject;
+            cubeGameObject.SetActive(false);
+            Destroy(cubeGameObject);
             
-            var myTransform = transform;
             var playerTransform = _player.transform;
             var playerPosition = playerTransform.position;
             
-            // Spawn a copy of player's cube and move player accordingly
-            var newCube = Instantiate(myTransform, myTransform.parent);
-            newCube.position = playerPosition;
+            // Spawn a copy of player's cube
+            var newCube = Instantiate(this, transform.parent);
+            newCube.Construct(_player);
+            newCube.transform.position = playerPosition;
+            
+            // Move player up
             playerPosition += Vector3.up;
             playerTransform.position = playerPosition;
         }

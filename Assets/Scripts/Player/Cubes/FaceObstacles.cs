@@ -1,3 +1,4 @@
+using System;
 using Player.Animation;
 using UnityEngine;
 
@@ -5,17 +6,24 @@ namespace Player.Cubes
 {
     public class FaceObstacles : MonoBehaviour
     {
-        private void OnCollisionEnter(Collision collision)
+        private void OnTriggerEnter(Collider other)
         {
-            if (!collision.collider.CompareTag("Obstacle"))
-            {
-                return;
+            switch (other.tag) {
+                case "Obstacle":
+                    HandleWallCollision(other.transform);
+                    break;
+                case "Lava":
+                    HandleLavaCollision();
+                    break;
             }
+        }
 
+        private void HandleWallCollision(Transform wall)
+        {
             var myTransform = transform;
             var collisionAngle = Vector3.Angle(
                 myTransform.forward,
-                collision.collider.transform.position - myTransform.position
+                wall.position - myTransform.position
             );
             
             if (collisionAngle > 40)
@@ -24,7 +32,12 @@ namespace Player.Cubes
             }
             
             myTransform.parent = null;
-            Destroy(this);
+            Destroy(this, 5);
+        }
+
+        private void HandleLavaCollision()
+        {
+            Destroy(gameObject);
         }
     }
 }
