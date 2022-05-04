@@ -3,15 +3,15 @@ Shader "Custom/Lava"
     Properties
     {
         _MainTex("Texture", 2D) = "white" {}
-        _OverlayTexture("Overlay Texture", 2D) = "white" {}
-        _Color("Color", Color) = (1, 1, 0, 0.5)
-        _SecondaryColor("Secondary Color", Color) = (1, 0, 0, 0.5)
+        _OverlayTexture("Overlay Texture", 2D) = "black" {}
+        _Color("Color", Color) = (1, 1, 0, 1)
+        _SecondaryColor("Secondary Color", Color) = (1, 0, 0, 1)
         _NoiseScale("Noise Scale", Range(1, 100)) = 25
         _Speed("Speed", Range(1, 20)) = 5
     }
     SubShader
     {
-        Tags { "RenderType"="Transparent" }
+        Tags { "RenderType"="Opaque" }
 
         Pass
         {
@@ -32,15 +32,19 @@ Shader "Custom/Lava"
             struct fragment_input
             {
                 float2 uv : TEXCOORD0;
+                float2 overlay_uv : TEXCOORD1;
                 float4 vertex : SV_POSITION;
-                float3 normal_ws : TEXCOORD1;
+                float3 normal_ws : TEXCOORD2;
             };
 
             CBUFFER_START(UnityPerMaterial)
 
             TEXTURE2D(_MainTex);
             SAMPLER(sampler_MainTex);
+            TEXTURE2D(_OverlayTexture);
+            SAMPLER(sampler_OverlayTexture);
             float4 _MainTex_ST;
+            float4 _OverlayTexture_ST;
             float4 _Color;
             float4 _SecondaryColor;
             float _NoiseScale;
@@ -88,6 +92,7 @@ Shader "Custom/Lava"
                 
                 fragment_data.vertex = TransformObjectToHClip(object_position);
                 fragment_data.uv = TRANSFORM_TEX(vertex_data.uv, _MainTex);
+                fragment_data.overlay_uv = TRANSFORM_TEX(vertex_data.uv, _OverlayTexture);
                 fragment_data.normal_ws = TransformObjectToWorldNormal(vertex_data.normal);
                 
                 return fragment_data;
@@ -110,7 +115,10 @@ Shader "Custom/Lava"
                 const float4 main_color = (1.0 - value) * main_albedo;
                 const float4 shadow_color = value * secondary_albedo;
 
-                return (main_color + shadow_color) * attenuation;
+                // Get the overlay texture and return the result
+                const float4 overlay = SAMPLE_TEXTURE2D(_OverlayTexture, sampler_OverlayTexture, fragment_data.overlay_uv);
+                //return overlay;
+                return max(main_color + shadow_color, overlay) * attenuation;
             }
             ENDHLSL
         }
