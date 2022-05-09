@@ -4,4 +4,5 @@
 public class PrefabData : ScriptableObject
 {
     public Transform playerCubePrefab;
+    public Transform playerTrailPrefab;
 }

@@ -45,7 +45,7 @@ namespace Player.Cubes
             var yDiff = myTransform.position.y - _container.transform.position.y;
             var isAlreadyRemoved = myTransform.parent == null;
             
-            if (yDiff >= -0.1f || isAlreadyRemoved)
+            if (yDiff >= -0.3f || isAlreadyRemoved)
             {
                 return;
             }

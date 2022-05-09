@@ -62,7 +62,7 @@ namespace Player.Movement
         private void CheckRoad()
         {
             if (!Physics.Raycast(
-                transform.TransformPoint(Vector3.up / 2),
+                transform.TransformPoint(Vector3.up),
                 Vector3.down,
                 out var hit,
                 float.PositiveInfinity,
