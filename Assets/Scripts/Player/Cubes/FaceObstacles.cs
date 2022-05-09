@@ -1,4 +1,3 @@
-using System;
 using Player.Cubes.Container;
 using UnityEngine;
 
@@ -6,7 +5,10 @@ namespace Player.Cubes
 {
     public class FaceObstacles : MonoBehaviour
     {
+        [Min(0)]
+        [SerializeField] private float _fallDestroyDelay;
         private CubeContainer _container;
+
         public void Construct(CubeContainer container)
         {
             _container = container;
@@ -51,7 +53,7 @@ namespace Player.Cubes
             }
 
             _container.RemoveCube(transform);
-            Destroy(gameObject, 3);
+            Destroy(gameObject, _fallDestroyDelay);
         }
     }
 }

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: PrefabData
   m_EditorClassIdentifier: 
   playerCubePrefab: {fileID: 5262422524421623085, guid: 49f68f9026ae70c4787efe8d121a4a06, type: 3}
+  playerTrailPrefab: {fileID: 769427368173701863, guid: ab870bd5e641510479545502695d5068, type: 3}
