@@ -54,7 +54,7 @@ Shader "Custom/Lava"
 
             // Unity's Perlin noise
             // Source: https://docs.unity3d.com/Packages/com.unity.shadergraph@6.9/manual/Gradient-Noise-Node.html
-            float2 noiseDirection(float2 p)
+            float2 noise_direction(float2 p)
             {
                 p = p % 289;
                 float x = (34 * p.x + 1) * p.x % 289 + p.y;
@@ -69,23 +69,16 @@ Shader "Custom/Lava"
             {
                 float2 ip = floor(p);
                 float2 fp = frac(p);
-                float d00 = dot(noiseDirection(ip), fp);
-                float d01 = dot(noiseDirection(ip + float2(0, 1)), fp - float2(0, 1));
-                float d10 = dot(noiseDirection(ip + float2(1, 0)), fp - float2(1, 0));
-                float d11 = dot(noiseDirection(ip + float2(1, 1)), fp - float2(1, 1));
+                float d00 = dot(noise_direction(ip), fp);
+                float d01 = dot(noise_direction(ip + float2(0, 1)), fp - float2(0, 1));
+                float d10 = dot(noise_direction(ip + float2(1, 0)), fp - float2(1, 0));
+                float d11 = dot(noise_direction(ip + float2(1, 1)), fp - float2(1, 1));
                 fp = fp * fp * fp * (fp * (fp * 6 - 15) + 10);
                 return lerp(lerp(d00, d01, fp.y), lerp(d10, d11, fp.y), fp.x);
             }
 
-            // Get the light attenuation, which is a dot product between a normal to the object surface
-            // and the light source direction
-            float light_attenuation(const Light light, const fragment_input fragment_data)
-            {
-                return max(0, dot(fragment_data.normal_ws, light.direction));
-            }
-
             // Main vertex program
-            fragment_input vertex (vertex_input vertex_data)
+            fragment_input vertex(vertex_input vertex_data)
             {
                 fragment_input fragment_data;
                 const float3 object_position = vertex_data.vertex.xyz;
@@ -99,16 +92,12 @@ Shader "Custom/Lava"
             }
 
             // Main fragment program
-            float4 fragment (const fragment_input fragment_data) : SV_Target
+            float4 fragment(const fragment_input fragment_data) : SV_Target
             {
                 // Get albedo for main and shadow colors
                 const float4 texture_sample = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, fragment_data.uv);
                 const float4 main_albedo = texture_sample * _Color;
                 const float4 secondary_albedo = texture_sample * _SecondaryColor;
-
-                // Get the light attenuation
-                const Light light = GetMainLight();
-                const float attenuation = light_attenuation(light, fragment_data);
 
                 // Get the noise
                 float value = noise(fragment_data.vertex.xy / _NoiseScale + _Time.x * _Speed);
@@ -118,7 +107,7 @@ Shader "Custom/Lava"
                 // Get the overlay texture and return the result
                 const float4 overlay = SAMPLE_TEXTURE2D(_OverlayTexture, sampler_OverlayTexture, fragment_data.overlay_uv);
                 //return overlay;
-                return max(main_color + shadow_color, overlay) * attenuation;
+                return max(main_color + shadow_color, overlay);
             }
             ENDHLSL
         }
