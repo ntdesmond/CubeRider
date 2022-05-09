@@ -1,15 +1,15 @@
-using Player.Animation;
+using Player.Cubes.Container;
 using UnityEngine;
 
 namespace Player.Cubes
 {
     public class Collect : MonoBehaviour
     {
-        private PlayerAnimations _player;
+        private CubeContainer _container;
         
-        public void Construct(PlayerAnimations player)
+        public void Construct(CubeContainer container)
         {
-            _player = player;
+            _container = container;
         }
         
         private void OnTriggerEnter(Collider other)
@@ -46,17 +46,7 @@ namespace Player.Cubes
             cubeGameObject.SetActive(false);
             Destroy(cubeGameObject);
             
-            var playerTransform = _player.transform;
-            var playerPosition = playerTransform.position;
-            
-            // Spawn a copy of player's cube
-            var newCube = Instantiate(this, transform.parent);
-            newCube.Construct(_player);
-            newCube.transform.position = playerPosition;
-            
-            // Move player up
-            playerPosition += Vector3.up;
-            playerTransform.position = playerPosition;
+            _container.AddCube();
         }
     }
 }

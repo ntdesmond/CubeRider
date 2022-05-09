@@ -417,11 +417,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3406328753548338250}
-  - component: {fileID: 1001353212417261603}
+  - component: {fileID: 3592231949432328491}
   - component: {fileID: -5610997597901878955}
   - component: {fileID: 6087410584402558441}
   - component: {fileID: 7261705742631425940}
-  - component: {fileID: 3592231949432328491}
+  - component: {fileID: 1001353212417261603}
   m_Layer: 0
   m_Name: Character
   m_TagString: Untagged
@@ -446,25 +446,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &1001353212417261603
-Animator:
-  serializedVersion: 3
+--- !u!114 &3592231949432328491
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4990477991023468297}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f6f34c519cf7e9e49b02bd46c762ebf9, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78abae1e44e24c2dac965f196763844c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &-5610997597901878955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -504,20 +497,27 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0.5, z: 0}
---- !u!114 &3592231949432328491
-MonoBehaviour:
+  m_Size: {x: 0.8, y: 1.2, z: 0.4}
+  m_Center: {x: 0, y: 0.6, z: 0.05}
+--- !u!95 &1001353212417261603
+Animator:
+  serializedVersion: 3
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4990477991023468297}
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78abae1e44e24c2dac965f196763844c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: f6f34c519cf7e9e49b02bd46c762ebf9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6916217239754871823
 GameObject:
   m_ObjectHideFlags: 0

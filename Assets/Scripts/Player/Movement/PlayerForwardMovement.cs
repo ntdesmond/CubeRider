@@ -1,4 +1,5 @@
 using Field;
+using Player.Cubes.Container;
 using UnityEngine;
 
 namespace Player.Movement
@@ -17,6 +18,11 @@ namespace Player.Movement
         
         private float _initialRotationY;
         
+        public void Construct(CubeContainer container)
+        {
+            container.NoCubesLeft += OnNoCubesLeft;
+        }
+        
         private void Update()
         {
             CheckRoad();
@@ -28,6 +34,11 @@ namespace Player.Movement
             }
             
             MoveStraight();
+        }
+
+        private void OnNoCubesLeft()
+        {
+            enabled = false;
         }
 
         private void MoveStraight()

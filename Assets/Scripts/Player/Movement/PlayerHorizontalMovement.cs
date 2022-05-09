@@ -1,3 +1,4 @@
+using Player.Cubes.Container;
 using UnityEngine;
 
 namespace Player.Movement
@@ -9,7 +10,7 @@ namespace Player.Movement
 
         private float _maxHorizontalOffset;
         
-        public void Construct(Camera camera)
+        public void Construct(UnityEngine.Camera camera, CubeContainer container)
         {
             // Get the X bounds of the player and set them as constraint
             var myTransform = transform;
@@ -23,6 +24,8 @@ namespace Player.Movement
             var screenRight = camera.WorldToScreenPoint(myRight);
 
             _fieldToScreenRatio = transform.localScale.x * (myRight.x - myLeft.x) / (screenRight.x - screenLeft.x);
+
+            container.NoCubesLeft += OnNoCubesLeft;
         }
         
         private void Update()
@@ -48,6 +51,11 @@ namespace Player.Movement
                 _maxHorizontalOffset
             );
             transform.localPosition = position;
+        }
+
+        private void OnNoCubesLeft()
+        {
+            enabled = false;
         }
     }
 }
