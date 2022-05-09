@@ -20,9 +20,6 @@ namespace Player.Character
         
         private void OnNoCubesLeft()
         {
-            _body.constraints = RigidbodyConstraints.None;
-            _body.isKinematic = true;
-
             var myTransform = transform;
             var isObstacle = Physics.Raycast(
                 myTransform.position + Vector3.up / 2,
