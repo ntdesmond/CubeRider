@@ -6,11 +6,11 @@ namespace Player
     {
         private Rigidbody _rigidbody;
 
-        public void Awake()
+        public void Construct(Rigidbody body)
         {
-            // Not using DI since a global resolver is used
-            _rigidbody = GetComponent<Rigidbody>();
+            _rigidbody = body;
         }
+        
         
         private void FixedUpdate()
         {

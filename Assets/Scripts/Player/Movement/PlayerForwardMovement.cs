@@ -1,4 +1,6 @@
+using System;
 using Field;
+using Player.Character;
 using Player.Cubes.Container;
 using UnityEngine;
 
@@ -9,6 +11,9 @@ namespace Player.Movement
         [Min(1)]
         public float movementSpeed;
 
+        public event Action FinishReached;
+
+        private bool _finishReached;
         private bool _isTurning;
         
         private Vector3 _turnCenter;
@@ -18,9 +23,9 @@ namespace Player.Movement
         
         private float _initialRotationY;
         
-        public void Construct(CubeContainer container)
+        public void Construct(GameFlow.GameFlow gameFlow)
         {
-            container.NoCubesLeft += OnNoCubesLeft;
+            gameFlow.GameOver += StopMovement;
         }
         
         private void Update()
@@ -36,7 +41,7 @@ namespace Player.Movement
             MoveStraight();
         }
 
-        private void OnNoCubesLeft()
+        private void StopMovement()
         {
             enabled = false;
         }
@@ -61,7 +66,7 @@ namespace Player.Movement
 
         private void CheckRoad()
         {
-            if (!Physics.Raycast(
+            if (_finishReached || !Physics.Raycast(
                 transform.TransformPoint(Vector3.up),
                 Vector3.down,
                 out var hit,
@@ -72,7 +77,15 @@ namespace Player.Movement
                 return;
             }
 
-            if (!hit.collider.TryGetComponent<Turn>(out var turn))
+            var collider = hit.collider;
+            
+            if (collider.CompareTag("Finish"))
+            {
+                OnFinishReached();
+                return;
+            }
+            
+            if (!collider.TryGetComponent<Turn>(out var turn))
             {
                 FinishTurn();
                 return;
@@ -118,6 +131,13 @@ namespace Player.Movement
 
             _initialRotationY = transform.rotation.eulerAngles.y;
             _isTurning = true;
+        }
+
+        private void OnFinishReached()
+        {
+            FinishTurn();
+            _finishReached = true;
+            FinishReached?.Invoke();
         }
     }
 }

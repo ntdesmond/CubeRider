@@ -1,4 +1,5 @@
 using Player.Cubes.Container;
+using Player.Movement;
 using UnityEngine;
 
 namespace Player.Character
@@ -6,21 +7,23 @@ namespace Player.Character
     public class CharacterAnimations : MonoBehaviour
     {
         private Animator _animator;
-        private Rigidbody _body;
         
         private readonly int _fall = Animator.StringToHash("Fall");
         private readonly int _fallBackwards = Animator.StringToHash("Fall Backwards");
+        private readonly int _dance = Animator.StringToHash("Dance");
+        
 
-        public void Construct(CubeContainer container, Animator animator, Rigidbody body)
+        public void Construct(Animator animator, GameFlow.GameFlow gameFlow)
         {
-            container.NoCubesLeft += OnNoCubesLeft;
+            gameFlow.LevelFailed += OnLevelFailed;
+            gameFlow.LevelCompleted += OnLevelCompleted;
             _animator = animator;
-            _body = body;
         }
         
-        private void OnNoCubesLeft()
+        private void OnLevelFailed()
         {
             var myTransform = transform;
+            
             var isObstacle = Physics.Raycast(
                 myTransform.position + Vector3.up / 2,
                 myTransform.forward,
@@ -29,6 +32,11 @@ namespace Player.Character
             );
             
             _animator.SetTrigger(isObstacle ? _fallBackwards : _fall);
+        }
+        
+        private void OnLevelCompleted()
+        {
+            _animator.SetBool(_dance, true);
         }
     }
 }
