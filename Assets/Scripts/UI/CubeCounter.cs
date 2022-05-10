@@ -1,4 +1,4 @@
-﻿using System;
+﻿using GameFlow;
 using Player.Cubes.Container;
 using TMPro;
 using UnityEngine;
@@ -10,11 +10,11 @@ namespace UI
         private CubeContainer _container;
         private TMP_Text _textField;
 
-        public void Construct(CubeContainer container, TMP_Text textField, GameFlow.GameFlow gameFlow)
+        public void Construct(CubeContainer container, TMP_Text textField, GameEvents gameEvents)
         {
             _container = container;
             _textField = textField;
-            gameFlow.FinishReached += DisableCounter;
+            gameEvents.FinishReached += DisableCounter;
         }
 
         private void OnEnable()

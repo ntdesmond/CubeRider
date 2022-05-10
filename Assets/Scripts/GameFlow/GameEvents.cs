@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace GameFlow
 {
-    public class GameFlow : MonoBehaviour
+    public class GameEvents : MonoBehaviour
     {
         public event Action GameOver, LevelFailed, LevelCompleted, FinishReached;
         private CubeContainer _cubeContainer;

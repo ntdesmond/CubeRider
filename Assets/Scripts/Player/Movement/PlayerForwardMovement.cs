@@ -1,7 +1,6 @@
 using System;
 using Field;
-using Player.Character;
-using Player.Cubes.Container;
+using GameFlow;
 using UnityEngine;
 
 namespace Player.Movement
@@ -23,9 +22,9 @@ namespace Player.Movement
         
         private float _initialRotationY;
         
-        public void Construct(GameFlow.GameFlow gameFlow)
+        public void Construct(GameEvents gameEvents)
         {
-            gameFlow.GameOver += StopMovement;
+            gameEvents.GameOver += StopMovement;
         }
         
         private void Update()
@@ -48,7 +47,8 @@ namespace Player.Movement
 
         private void MoveStraight()
         {
-            transform.position += movementSpeed * Time.deltaTime * transform.forward;
+            var myTransform = transform;
+            myTransform.position += movementSpeed * Time.deltaTime * myTransform.forward;
         }
 
         private void MoveOnTurn()
@@ -77,15 +77,15 @@ namespace Player.Movement
                 return;
             }
 
-            var collider = hit.collider;
+            var fieldPart = hit.collider;
             
-            if (collider.CompareTag("Finish"))
+            if (fieldPart.CompareTag("Finish"))
             {
                 OnFinishReached();
                 return;
             }
             
-            if (!collider.TryGetComponent<Turn>(out var turn))
+            if (!fieldPart.TryGetComponent<Turn>(out var turn))
             {
                 FinishTurn();
                 return;
@@ -102,11 +102,12 @@ namespace Player.Movement
             }
             
             // Fix rotation to one of 90-degree directions
-            transform.rotation = Quaternion.Euler(0, _initialRotationY + (_isTurningRight ? 90 : -90), 0);
+            var myTransform = transform;
+            myTransform.rotation = Quaternion.Euler(0, _initialRotationY + (_isTurningRight ? 90 : -90), 0);
                 
             // Round the position as well
-            var originalPosition = transform.position;
-            transform.position = new Vector3(
+            var originalPosition = myTransform.position;
+            myTransform.position = new Vector3(
                 Mathf.Round(originalPosition.x * 2) / 2,
                 originalPosition.y,
                 Mathf.Round(originalPosition.z * 2) / 2
@@ -126,10 +127,12 @@ namespace Player.Movement
             
             // Calculate the center and radius point of the arc
             var turnTransform = turn.transform;
+            var myTransform = transform;
+            
             _turnCenter = turnTransform.TransformPoint(Vector3.up / 2);
-            _turnRadius = (_turnCenter - transform.position).magnitude;
+            _turnRadius = (_turnCenter - myTransform.position).magnitude;
 
-            _initialRotationY = transform.rotation.eulerAngles.y;
+            _initialRotationY = myTransform.rotation.eulerAngles.y;
             _isTurning = true;
         }
 

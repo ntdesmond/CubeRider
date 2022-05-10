@@ -1,3 +1,4 @@
+using GameFlow;
 using Player.Character;
 using Player.Cubes.Container;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Player.Movement
 
         private float _maxHorizontalOffset;
         
-        public void Construct(UnityEngine.Camera camera, GameFlow.GameFlow gameFlow)
+        public void Construct(UnityEngine.Camera camera, GameEvents gameEvents)
         {
             // Get the X bounds of the player and set them as constraint
             var myTransform = transform;
@@ -26,7 +27,7 @@ namespace Player.Movement
 
             _fieldToScreenRatio = transform.localScale.x / (screenRight.x - screenLeft.x);
 
-            gameFlow.GameOver += DisableInput;
+            gameEvents.GameOver += DisableInput;
         }
         
         private void Update()

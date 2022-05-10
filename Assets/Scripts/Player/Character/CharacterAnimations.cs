@@ -1,3 +1,4 @@
+using GameFlow;
 using Player.Cubes.Container;
 using Player.Movement;
 using UnityEngine;
@@ -13,10 +14,10 @@ namespace Player.Character
         private readonly int _dance = Animator.StringToHash("Dance");
         
 
-        public void Construct(Animator animator, GameFlow.GameFlow gameFlow)
+        public void Construct(Animator animator, GameEvents gameEvents)
         {
-            gameFlow.LevelFailed += OnLevelFailed;
-            gameFlow.LevelCompleted += OnLevelCompleted;
+            gameEvents.LevelFailed += OnLevelFailed;
+            gameEvents.LevelCompleted += OnLevelCompleted;
             _animator = animator;
         }
         
