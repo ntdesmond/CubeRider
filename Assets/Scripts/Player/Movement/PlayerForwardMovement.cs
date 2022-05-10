@@ -25,6 +25,7 @@ namespace Player.Movement
         public void Construct(GameEvents gameEvents)
         {
             gameEvents.GameOver += StopMovement;
+            gameEvents.LevelStarted += OnLevelStarted;
         }
         
         private void Update()
@@ -38,6 +39,14 @@ namespace Player.Movement
             }
             
             MoveStraight();
+        }
+
+        private void OnLevelStarted()
+        {
+            var myTransform = transform;
+            myTransform.localPosition = new Vector3(0, myTransform.localPosition.y, 0);
+            myTransform.localRotation = Quaternion.Euler(Vector3.zero);
+            enabled = true;
         }
 
         private void StopMovement()

@@ -2,19 +2,21 @@
 using Player;
 using Player.Cubes.Container;
 using Player.Movement;
+using UI;
 using UnityEngine;
 
 namespace GameFlow
 {
     public class GameEvents : MonoBehaviour
     {
-        public event Action GameOver, LevelFailed, LevelCompleted, FinishReached;
+        public event Action LevelStarted, GameOver, LevelFailed, LevelCompleted, FinishReached;
         private CubeContainer _cubeContainer;
         
         public void Construct(
             CubeContainer container,
             FaceObstacles playerObstacles,
-            PlayerForwardMovement playerForwardMovement
+            PlayerForwardMovement playerForwardMovement,
+            MainMenuTouchHandler touchHandler
         )
         {
             _cubeContainer = container;
@@ -24,6 +26,7 @@ namespace GameFlow
             
             playerForwardMovement.FinishReached += OnFinishReached;
             playerObstacles.WallCollided += InvokeLevelFailed;
+            touchHandler.UserTouched += InvokeLevelStarted;
         }
 
         private void Awake()
@@ -51,6 +54,11 @@ namespace GameFlow
         private void InvokeLevelFailed()
         {
             LevelFailed?.Invoke();
+        }
+
+        private void InvokeLevelStarted()
+        {
+            LevelStarted?.Invoke();
         }
     }
 }

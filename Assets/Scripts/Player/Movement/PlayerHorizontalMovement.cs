@@ -28,6 +28,13 @@ namespace Player.Movement
             _fieldToScreenRatio = transform.localScale.x / (screenRight.x - screenLeft.x);
 
             gameEvents.GameOver += DisableInput;
+            gameEvents.LevelStarted += OnLevelStarted;
+        }
+
+        private void OnLevelStarted()
+        {
+            transform.localPosition = Vector3.zero;
+            enabled = true;
         }
         
         private void Update()
