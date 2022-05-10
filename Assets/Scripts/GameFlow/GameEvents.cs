@@ -9,7 +9,7 @@ namespace GameFlow
 {
     public class GameEvents : MonoBehaviour
     {
-        public event Action LevelStarted, GameOver, LevelFailed, LevelCompleted, FinishReached;
+        public event Action LevelStarted, GameOver, LevelFailed, LevelCompleted, FinishReached, BonusBrickHit;
         private CubeContainer _cubeContainer;
         
         public void Construct(
@@ -29,6 +29,22 @@ namespace GameFlow
             touchHandler.UserTouched += InvokeLevelStarted;
         }
 
+        /// <summary>
+        /// Callback to be called in the player cubes when they bump into the bonus brick.
+        /// </summary>
+        public void OnBonusBrickHit()
+        {
+            BonusBrickHit?.Invoke();
+        }
+
+        /// <summary>
+        /// Callback to be called in the player cubes when they reach the final bonus brick.
+        /// </summary>
+        public void OnVeryEndReached()
+        {
+            InvokeLevelCompleted();
+        }
+        
         private void Awake()
         {
             _cubeContainer.NoCubesLeft += InvokeLevelFailed;

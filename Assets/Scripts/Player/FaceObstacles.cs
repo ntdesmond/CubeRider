@@ -1,4 +1,5 @@
 using System;
+using GameFlow;
 using UnityEngine;
 
 namespace Player
@@ -8,18 +9,33 @@ namespace Player
         public event Action WallCollided;
         
         private Collider _collider;
+        private GameEvents _gameEvents;
 
-        public void Construct(Collider myCollider)
+        public void Construct(Collider myCollider, GameEvents gameEvents)
         {
             _collider = myCollider;
+            _gameEvents = gameEvents;
         }
-        
+
+        private void Awake()
+        {
+            _gameEvents.FinishReached += StartBonusCounting;
+        }
+
         private void OnCollisionEnter(Collision collision)
         {
             var other = collision.collider;
-            if (!other.CompareTag("Obstacle"))
+
+            switch (other.tag)
             {
-                return;
+                case "VeryEnd":
+                    WallCollided += _gameEvents.OnVeryEndReached;
+                    break;
+                case "Obstacle":
+                    break;
+                default:
+                    // Return if not Obstacle or VeryEnd
+                    return;
             }
             
             HandleWallCollision(other);
@@ -41,6 +57,11 @@ namespace Player
             }
             
             WallCollided?.Invoke();
+        }
+
+        private void StartBonusCounting()
+        {
+            WallCollided += _gameEvents.OnBonusBrickHit;
         }
     }
 }

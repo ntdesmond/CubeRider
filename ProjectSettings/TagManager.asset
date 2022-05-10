@@ -8,6 +8,7 @@ TagManager:
   - PlayerCube
   - Obstacle
   - Lava
+  - VeryEnd
   layers:
   - Default
   - TransparentFX
