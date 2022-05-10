@@ -8,7 +8,7 @@ namespace GameFlow
 {
     public class GameFlow : MonoBehaviour
     {
-        public event Action GameOver, LevelFailed, LevelCompleted;
+        public event Action GameOver, LevelFailed, LevelCompleted, FinishReached;
         private CubeContainer _cubeContainer;
         
         public void Construct(
@@ -33,6 +33,7 @@ namespace GameFlow
 
         private void OnFinishReached()
         {
+            FinishReached?.Invoke();
             _cubeContainer.NoCubesLeft -= InvokeLevelFailed;
             _cubeContainer.NoCubesLeft += InvokeLevelCompleted;
         }
