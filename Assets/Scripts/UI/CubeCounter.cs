@@ -1,4 +1,5 @@
-﻿using GameFlow;
+﻿using System;
+using GameFlow;
 using Player.Cubes.Container;
 using TMPro;
 using UnityEngine;
@@ -10,26 +11,15 @@ namespace UI
         private CubeContainer _container;
         private TMP_Text _textField;
 
-        public void Construct(CubeContainer container, TMP_Text textField, GameEvents gameEvents)
+        public void Construct(CubeContainer container, TMP_Text textField)
         {
             _container = container;
             _textField = textField;
-            gameEvents.FinishReached += DisableCounter;
         }
 
-        private void OnEnable()
+        private void Awake()
         {
             _container.CubeCountChanged += SetCubeCountText;
-        }
-
-        private void OnDisable()
-        {
-            _container.CubeCountChanged -= SetCubeCountText;
-        }
-
-        private void DisableCounter()
-        {
-            enabled = false;
         }
 
         private void SetCubeCountText()

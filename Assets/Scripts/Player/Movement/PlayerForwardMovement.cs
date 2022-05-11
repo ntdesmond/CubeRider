@@ -12,6 +12,9 @@ namespace Player.Movement
 
         public event Action FinishReached;
 
+        private Vector3 _gameStartPosition;
+        private Quaternion _gameStartRotation;
+
         private bool _finishReached;
         private bool _isTurning;
         
@@ -26,8 +29,16 @@ namespace Player.Movement
         {
             gameEvents.GameOver += StopMovement;
             gameEvents.LevelStarted += OnLevelStarted;
+            gameEvents.MainMenuEntered += ResetPosition;
         }
-        
+
+        private void Awake()
+        {
+            var myTransform = transform;
+            _gameStartPosition = myTransform.localPosition;
+            _gameStartRotation = myTransform.localRotation;
+        }
+
         private void Update()
         {
             CheckRoad();
@@ -41,11 +52,16 @@ namespace Player.Movement
             MoveStraight();
         }
 
-        private void OnLevelStarted()
+        private void ResetPosition()
         {
             var myTransform = transform;
-            myTransform.localPosition = new Vector3(0, myTransform.localPosition.y, 0);
-            myTransform.localRotation = Quaternion.Euler(Vector3.zero);
+            myTransform.localPosition = _gameStartPosition;
+            myTransform.localRotation = _gameStartRotation;
+        }
+
+        private void OnLevelStarted()
+        {
+            ResetPosition();
             enabled = true;
         }
 

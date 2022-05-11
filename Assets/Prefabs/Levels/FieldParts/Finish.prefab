@@ -1017,7 +1017,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2988151501360165080, guid: c2c4bfa47e0c2e5448366d43abf8500b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.8000001
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 2988151501360165080, guid: c2c4bfa47e0c2e5448366d43abf8500b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1061,7 +1061,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2988151501360165083, guid: c2c4bfa47e0c2e5448366d43abf8500b, type: 3}
       propertyPath: m_TagString
-      value: Obstacle
+      value: Bonus
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2c4bfa47e0c2e5448366d43abf8500b, type: 3}
@@ -1099,7 +1099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2988151501360165080, guid: c2c4bfa47e0c2e5448366d43abf8500b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.6000001
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 2988151501360165080, guid: c2c4bfa47e0c2e5448366d43abf8500b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1143,7 +1143,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2988151501360165083, guid: c2c4bfa47e0c2e5448366d43abf8500b, type: 3}
       propertyPath: m_TagString
-      value: Obstacle
+      value: Bonus
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2c4bfa47e0c2e5448366d43abf8500b, type: 3}
@@ -1225,7 +1225,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2988151501360165083, guid: c2c4bfa47e0c2e5448366d43abf8500b, type: 3}
       propertyPath: m_TagString
-      value: Obstacle
+      value: Bonus
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2c4bfa47e0c2e5448366d43abf8500b, type: 3}
@@ -1307,7 +1307,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2988151501360165083, guid: c2c4bfa47e0c2e5448366d43abf8500b, type: 3}
       propertyPath: m_TagString
-      value: Obstacle
+      value: Bonus
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c2c4bfa47e0c2e5448366d43abf8500b, type: 3}

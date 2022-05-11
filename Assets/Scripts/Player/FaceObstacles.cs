@@ -17,25 +17,16 @@ namespace Player
             _gameEvents = gameEvents;
         }
 
-        private void Awake()
-        {
-            _gameEvents.FinishReached += StartBonusCounting;
-        }
-
         private void OnCollisionEnter(Collision collision)
         {
             var other = collision.collider;
-
-            switch (other.tag)
+            if (!(
+                other.CompareTag("VeryEnd") || 
+                other.CompareTag("Obstacle") || 
+                other.CompareTag("Bonus")
+            ))
             {
-                case "VeryEnd":
-                    WallCollided += _gameEvents.OnVeryEndReached;
-                    break;
-                case "Obstacle":
-                    break;
-                default:
-                    // Return if not Obstacle or VeryEnd
-                    return;
+                return;
             }
             
             HandleWallCollision(other);
@@ -57,11 +48,16 @@ namespace Player
             }
             
             WallCollided?.Invoke();
-        }
-
-        private void StartBonusCounting()
-        {
-            WallCollided += _gameEvents.OnBonusBrickHit;
+            
+            if (wall.CompareTag("Bonus"))
+            {
+                _gameEvents.OnBonusBrickHit();
+            }
+            else if (wall.CompareTag("VeryEnd"))
+            {
+                _gameEvents.OnBonusBrickHit();
+                _gameEvents.OnVeryEndReached();
+            }
         }
     }
 }

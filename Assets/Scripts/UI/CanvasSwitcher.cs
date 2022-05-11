@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GameFlow;
 using UnityEngine;
 
@@ -19,6 +18,7 @@ namespace UI
             gameEvents.LevelStarted += OnLevelStarted;
             gameEvents.LevelFailed += OnLevelFailed;
             gameEvents.LevelCompleted += OnLevelCompleted;
+            gameEvents.MainMenuEntered += OnMainMenu;
         }
 
         private void Awake()
@@ -56,6 +56,12 @@ namespace UI
         {
             DisableAllCanvases();
             _levelCompletedCanvas.SetActive(true);
+        }
+
+        private void OnMainMenu()
+        {
+            DisableAllCanvases();
+            _mainMenuCanvas.SetActive(true);
         }
     }
 }

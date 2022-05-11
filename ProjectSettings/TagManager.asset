@@ -9,6 +9,7 @@ TagManager:
   - Obstacle
   - Lava
   - VeryEnd
+  - Bonus
   layers:
   - Default
   - TransparentFX

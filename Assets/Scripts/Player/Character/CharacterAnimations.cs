@@ -16,6 +16,8 @@ namespace Player.Character
 
         public void Construct(Animator animator, GameEvents gameEvents)
         {
+            gameEvents.LevelStarted += OnLevelStarted;
+            gameEvents.MainMenuEntered += OnLevelStarted;
             gameEvents.LevelFailed += OnLevelFailed;
             gameEvents.LevelCompleted += OnLevelCompleted;
             _animator = animator;
@@ -32,12 +34,19 @@ namespace Player.Character
                 LayerMask.GetMask("Obstacle")
             );
             
-            _animator.SetTrigger(isObstacle ? _fallBackwards : _fall);
+            _animator.SetBool(isObstacle ? _fallBackwards : _fall, true);
         }
         
         private void OnLevelCompleted()
         {
             _animator.SetBool(_dance, true);
+        }
+        
+        private void OnLevelStarted()
+        {
+            _animator.SetBool(_dance, false);
+            _animator.SetBool(_fall, false);
+            _animator.SetBool(_fallBackwards, false);
         }
     }
 }

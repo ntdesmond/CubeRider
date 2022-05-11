@@ -1,18 +1,26 @@
-using Player.Character;
+using System;
+using GameFlow;
+using LevelTrash;
 using UnityEngine;
 
 namespace Player.Trail
 {
-    public class StopAboveLava : MonoBehaviour
+    public class Recreate : MonoBehaviour
     {
-        private Transform _parent;
-        private Vector3 _position;
-        private Transform _trailPrefab;
-
+        private GameEvents _gameEvents;
         
-        public void Construct(PrefabData prefabs)
+        private Transform _parent;
+        private Transform _trailPrefab;
+        private Transform _trash;
+        
+        private Vector3 _position;
+
+
+        public void Construct(PrefabData prefabs, Trash trash, GameEvents gameEvents)
         {
             _trailPrefab = prefabs.playerTrailPrefab;
+            _trash = trash.transform;
+            _gameEvents = gameEvents;
         }
         
         private void Awake()
@@ -20,29 +28,40 @@ namespace Player.Trail
             var myTransform = transform;
             _parent = myTransform.parent;
             _position = myTransform.localPosition;
+            
+            
+            _gameEvents.GameOver += StopAndDisable;
+            _gameEvents.LevelStarted += SpawnNewTrail;
+        }
+
+        private void OnDestroy()
+        {
+            _gameEvents.GameOver -= StopAndDisable;
+            _gameEvents.LevelStarted -= SpawnNewTrail;
         }
 
         private void Update()
         {
-            if (Physics.Raycast(
+            // Stop the trail when no field below
+            if (!Physics.Raycast(
                 _parent.TransformPoint(Vector3.up),
                 Vector3.down,
                 float.PositiveInfinity,
                 LayerMask.GetMask("Field")
             ))
             {
-                SpawnNewTrail();
+                StopSelf();
                 return;
             }
             
-            // Stop the trail movement
-            transform.parent = null;
+            // Restart the trail when is above the field again
+            SpawnNewTrail();
         }
 
         private void SpawnNewTrail()
         {
             // Proceed only if the current trail is over
-            if (transform.parent != null)
+            if (!transform.IsChildOf(_trash))
             {
                 return;
             }
@@ -51,6 +70,17 @@ namespace Player.Trail
             var newTrail = Instantiate(_trailPrefab, _parent);
             newTrail.transform.localPosition = _position;
             
+            enabled = false;
+        }
+
+        private void StopSelf()
+        {
+            transform.SetParent(_trash);
+        }
+
+        private void StopAndDisable()
+        {
+            StopSelf();
             enabled = false;
         }
     }

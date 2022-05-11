@@ -1,22 +1,23 @@
 ﻿using GameFlow;
-using TMPro;
 using UnityEngine;
 
 namespace UI.GemReward
 {
     public class TotalLevelReward : MonoBehaviour
     {
-        private LevelGemCounter _counter;
+        private GemTweening _gem;
+        private LevelGemCounter _levelCounter;
 
-        public void Construct(LevelGemCounter counter, GameEvents gameEvents)
+        public void Construct(LevelGemCounter levelCounter, GameEvents gameEvents, GemTweening gem)
         {
-            _counter = counter;
+            _levelCounter = levelCounter;
+            _gem = gem;
             gameEvents.LevelCompleted += AddGems;
         }
 
         private void AddGems()
         {
-            Debug.Log($"Total {_counter.TotalReward} gems");
+            _gem.MoveToCounter(_levelCounter.TotalReward);
         }
     }
 }

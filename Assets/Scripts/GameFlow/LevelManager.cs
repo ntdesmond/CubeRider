@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Player.Movement;
 using UI;
+using UI.Input;
 using UnityEngine;
 
 namespace GameFlow
@@ -15,9 +16,13 @@ namespace GameFlow
 
         private int _currentLevelIndex;
 
-        public void Construct(GameGlobalState gameGlobalState)
+        public void Construct(GameGlobalState gameGlobalState, GameEvents gameEvents)
         {
             _gameGlobalState = gameGlobalState;
+
+            gameEvents.LevelRetry += LoadCurrentLevel;
+            gameEvents.MainMenuEntered += LoadCurrentLevel;
+            gameEvents.NextLevel += LoadNextLevel;
         }
         
         private void Awake()
@@ -29,8 +34,6 @@ namespace GameFlow
 
         private void LoadNextLevel()
         {
-            Destroy(_currentLevel);
-
             _currentLevelIndex = GetNextLevelIndex();
             _gameGlobalState.Level = _currentLevelIndex;
             
@@ -39,6 +42,11 @@ namespace GameFlow
 
         private void LoadCurrentLevel()
         {
+            if (_currentLevel != null)
+            {
+                Destroy(_currentLevel);
+            }
+            
             _currentLevel = Instantiate(_levels[_currentLevelIndex]);
         }
         

@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 769427368173701863}
   - component: {fileID: 769427368173701862}
-  - component: {fileID: 4419283752590893634}
   - component: {fileID: 6247446579167655098}
+  - component: {fileID: 4584490527803004899}
   m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
@@ -131,18 +131,6 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!114 &4419283752590893634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 769427368173701860}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d40f3bf41ad7f34f88b27c12bbc2ebb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6247446579167655098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,3 +146,15 @@ MonoBehaviour:
   _overrideDependencySource: 1
   _dependencySource: 24
   _destroyWhenFinished: 1
+--- !u!114 &4584490527803004899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 769427368173701860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d40f3bf41ad7f34f88b27c12bbc2ebb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -19,16 +19,16 @@ namespace UI
 
         private void OnEnable()
         {
-            _gameGlobalState.GemCountChanged += UpdateGemCount;
-            UpdateGemCount();
+            _gameGlobalState.GemCountChanged += LoadGemCount;
+            LoadGemCount();
         }
 
         private void OnDisable()
         {
-            _gameGlobalState.GemCountChanged -= UpdateGemCount;
+            _gameGlobalState.GemCountChanged -= LoadGemCount;
         }
 
-        public void UpdateGemCount()
+        private void LoadGemCount()
         {
             _gemCount = _gameGlobalState.GemCount;
         }
